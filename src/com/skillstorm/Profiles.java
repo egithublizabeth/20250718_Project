@@ -1,22 +1,86 @@
 package com.skillstorm;
 
+import java.util.Scanner;
+
 public class Profiles {
 
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		
-		Profile profile1 = new Profile("Mary Sue", "1st Class", 3, 1, 1, 2);
-		profile1.info();
-		
-		System.out.println("\n");
-		Profile profile2 = new Profile("Amelia Evergreen", "2nd Class", 2, 3, 2, 3);
-		profile2.info();
-		
-		System.out.println("\n");
-		Profile profile3 = new Profile("Billy Joel", "Worker", 1, 2, 3, 1);
-		profile3.info();
 
+		//using scanner to get user name
+		Scanner scanner = new Scanner(System.in);
+	       
+		//get user name and process it
+        System.out.println("What is your name? ");
+        String userInputName = scanner.nextLine().toLowerCase().trim();
+        String userName = userInputName.substring(0, 1).toUpperCase() + userInputName.substring(1);
+       
+        System.out.println("user name: " + userName);
+        System.out.println("\n");
+        
+        //let user choose the profile
+        //instantiate variables
+        boolean notMet = true;
+        int profileInput = 0;
+        
+        
+        //user must enter valid integers 1,2,3
+        do 
+        {
+	        System.out.println("Pick your profile: (select 1, 2, or 3)" + "\n" + 
+	        					"1. First Class Traveler " + "\n" + 
+	        					"2. Second Class Traveler " + "\n" + 
+	        					"3. Worker Traveler " );
+	        
+	        //if the read line is an integer, else its invalid and input again
+	        if (scanner.hasNextInt()) 
+	        {
+	        	profileInput = scanner.nextInt(); 
+	        	
+	        	if ((profileInput == 1) | (profileInput == 2) | (profileInput == 3))
+		        	notMet = false;
+	        }
+	        else
+	        {
+		        System.out.println("Invalid input, must enter the following: 1, 2, or 3.");
+		        scanner.next();
+	        }
+	     
+//	    System.out.println("profile input: " + profileInput);
+//	    System.out.println("notMet is: " + notMet);
+	    System.out.println("\n");
+
+        } while (notMet); //while true, keep doing this loop
+        
+
+        //use switch statement to create the profile the user picked
+        //instantiate variable
+        Profile profile = null;
+        
+        switch(profileInput)
+        {
+	        case 1:
+	        	{
+	        		profile = new Profile(userName, "1st Class", 3, 1, 1, 2);
+	        		break;
+	        	}
+	        case 2:
+	        	{
+	        		profile = new Profile(userName, "2nd Class", 2, 3, 2, 3);
+	        		break;
+	        	}
+	        case 3: 
+	        	{
+	        		profile = new Profile(userName, "Worker", 1, 2, 3, 1);
+	        	}
+        }
+    
+    
+	    System.out.println("\n");
+		profile.info();
+        scanner.close();
+        System.out.println("done");
 
 	}
 
