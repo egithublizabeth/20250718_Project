@@ -1,22 +1,70 @@
 package com.skillstorm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+
 
 public class Profiles {
 
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
+		
+		 //instantiate variables
+		String[] userNameArray = null;
+        int i;
+        ArrayList<String> nameArray = new ArrayList<>();
+        String nameString = null;
+        Boolean validName = true;
+        String userInputName = null;
 
 		//using scanner to get user name
 		Scanner scanner = new Scanner(System.in);
-	       
-		//get user name and process it
-        System.out.println("What is your name? ");
-        String userInputName = scanner.nextLine().toLowerCase().trim();
-        String userName = userInputName.substring(0, 1).toUpperCase() + userInputName.substring(1);
-       
-        System.out.println("user name: " + userName);
+		
+		//get user name and process it, do this untill a valid name is entered
+		do
+		{
+	        System.out.println("What is your name? ");
+	        userInputName = scanner.nextLine();
+	        
+	        if (userInputName.isBlank()) //check if empty or blank
+	        	{System.out.println("Name can not be empty or blank. \n");}      
+	        else if (userInputName.length()>21) //check if <20 characters
+	    		{System.out.println("Name must be less than 21 characters. \n");}
+	        else //it is a valid input
+	        	{validName = false;}
+	        
+		} while(validName);//while true, do this
+	    
+		//trim white spaces and lower case
+		userNameArray = userInputName.trim().toLowerCase().split(" ");
+    	
+		//for loop, if blank toss it, if not store name in an ArrayList
+        for (i=0; i<userNameArray.length; i++)
+        {
+        	if (userNameArray[i].isBlank()) //if the string is blank/white spaces
+        	{ continue; }//do not include it, iterate and move to next iteration
+        	else
+        	{
+        		//capitalize the first letter and add it to the ArrayList
+        		String nameFixed = userNameArray[i].substring(0,1).toUpperCase() + userNameArray[i].substring(1);
+        		nameArray.add(nameFixed);
+        	}
+        }
+        
+        //concatenate the name and assign it to nameString
+        for (i=0; i < nameArray.size(); i++)
+        {
+        	if (i==0)
+        		nameString = nameArray.get(i);
+        	else
+        		nameString = nameString + " " + nameArray.get(i);
+        }
+    
+        
+     
+        System.out.println("user name: " + nameString);
         System.out.println("\n");
         
         //let user choose the profile
@@ -29,9 +77,9 @@ public class Profiles {
         do 
         {
 	        System.out.println("Pick your profile: (select 1, 2, or 3)" + "\n" + 
-	        					"1. First Class Traveler " + "\n" + 
-	        					"2. Second Class Traveler " + "\n" + 
-	        					"3. Worker Traveler " );
+	        					"1. 1st Class Traveler " + "\n" + 
+	        					"2. 2nd Class Traveler " + "\n" + 
+	        					"3. 3rd Class Traveler " );
 	        
 	        //if the read line is an integer, else its invalid and input again
 	        if (scanner.hasNextInt()) 
@@ -43,14 +91,9 @@ public class Profiles {
 	        }
 	        else
 	        {
-		        System.out.println("Invalid input, must enter the following: 1, 2, or 3.");
+		        System.out.println("Invalid input, must enter the following: 1, 2, or 3. \n");
 		        scanner.next();
 	        }
-	     
-//	    System.out.println("profile input: " + profileInput);
-//	    System.out.println("notMet is: " + notMet);
-	    System.out.println("\n");
-
         } while (notMet); //while true, keep doing this loop
         
 
@@ -62,17 +105,17 @@ public class Profiles {
         {
 	        case 1:
 	        	{
-	        		profile = new Profile(userName, "1st Class", 3, 1, 1, 2);
+	        		profile = new Profile(nameString, "1st Class", 3, 1, 1, 2);
 	        		break;
 	        	}
 	        case 2:
 	        	{
-	        		profile = new Profile(userName, "2nd Class", 2, 3, 2, 3);
+	        		profile = new Profile(nameString, "2nd Class", 2, 3, 2, 3);
 	        		break;
 	        	}
 	        case 3: 
 	        	{
-	        		profile = new Profile(userName, "Worker", 1, 2, 3, 1);
+	        		profile = new Profile(nameString, "3rd Class", 1, 2, 3, 1);
 	        	}
         }
     
@@ -92,17 +135,17 @@ class Profile
 	final public String name;
 	final public String traveler;
 	final public int money;
-	final public int smart;
+	final public int survivalSkills;
 	final public int strength;
 	final public int swim;
 	
 	//constructors
-	public Profile(String name, String traveler, int money, int smart, int strength, int swim)
+	public Profile(String name, String traveler, int money, int survivalSkills, int strength, int swim)
 	{
 		this.name = name;
 		this.traveler = traveler;
 		this.money = money;
-		this.smart = smart;
+		this.survivalSkills = survivalSkills;
 		this.strength = strength;
 		this.swim = swim;
 	}
@@ -111,12 +154,12 @@ class Profile
 	public void info()
 	{
 		System.out.println("Profile Character (1-low, 2-mid, 3-high)" + "\n" +
-						   "Name: " + name + "\n" + 
-						   "Traveler: " + traveler + "\n" + 
-						   "Money: " + money + "\n" +
-						   "Smart: " + smart + "\n" + 
-						   "Strength: " + strength + "\n" +
-						   "Swim: " + swim + "\n");
+						   "Name:             " + name + "\n" + 
+						   "Traveler:         " + traveler + "\n" + 
+						   "Money:            " + money + "\n" +
+						   "Survival Skills:  " + survivalSkills + "\n" + 
+						   "Strength:         " + strength + "\n" +
+						   "Swim:             " + swim + "\n");
 	}
 	
 
