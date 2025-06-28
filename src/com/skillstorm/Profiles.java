@@ -107,22 +107,27 @@ public class Profiles {
 	        case 1:
 	        	{
 	        		profile = new Profile(nameString, "1st Class", 3, 1, 1, 2);
+	        		profile.setBackStory(profileInput);
 	        		break;
 	        	}
 	        case 2:
 	        	{
 	        		profile = new Profile(nameString, "2nd Class", 2, 3, 2, 3);
+	        		profile.setBackStory(profileInput);
 	        		break;
 	        	}
 	        case 3: 
 	        	{
 	        		profile = new Profile(nameString, "3rd Class", 1, 2, 3, 1);
+	        		profile.setBackStory(profileInput);
+
 	        	}
         }
     
     
 	    System.out.println("\n");
 		profile.info();
+		System.out.println(profile.backStory);
 		
 		//access profile surivalList example - to make sure it works
 		int survivalScore;
@@ -152,6 +157,7 @@ class Profile
 	final public int strength;
 	final public int swim;
 	List<Integer> survivalScoreList = new ArrayList<>(); //to store survival points through each scene
+	public String backStory;
 	
 	//constructors
 	public Profile(String name, String traveler, int money, int survivalSkills, int strength, int swim)
@@ -176,6 +182,29 @@ class Profile
 						   "Swim:             " + swim + "\n");
 	}
 	
+	//set backStory variable
+	public void setBackStory(int profileInput)
+	{
+		switch(profileInput)
+        {
+	        case 1:
+	        	{
+	        		this.backStory = "Backstory: You are fancy socialite, who loves shopping and will be draped in the finest dresses or tuxes. \nYour motto: \"I am a fashion icon\"";
+	        		break;
+	        	}
+	        case 2:
+	        	{
+	        		this.backStory = "Backstory: You are a prominent doctor, traveling to be a guest speaker at \'Surgeons of the World\' convention. \nYour motto: \"There's never a challenge too small\"";
+	        		break;
+	        	}
+	        case 3: 
+	        	{
+	        		this.backStory = "Backstory: You are starting a new life in America and am determined to build your own business. \nYour motto: \"I will not live a life I do not deserve\"";
+	        	}
+        }
+	}
+	
+	//calc survial score
 	public int calcSurvival(List<Integer> survivalScoreList) 
 	{
 		int sum = 0;
