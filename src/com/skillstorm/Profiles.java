@@ -2,6 +2,7 @@ package com.skillstorm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -22,7 +23,7 @@ public class Profiles {
 		//using scanner to get user name
 		Scanner scanner = new Scanner(System.in);
 		
-		//get user name and process it, do this untill a valid name is entered
+		//get user name and process it, do this until a valid name is entered
 		do
 		{
 	        System.out.println("What is your name? ");
@@ -122,6 +123,18 @@ public class Profiles {
     
 	    System.out.println("\n");
 		profile.info();
+		
+		//access profile surivalList example - to make sure it works
+		int survivalScore;
+		System.out.println(profile.survivalScoreList);
+		profile.survivalScoreList.add(2);
+		profile.survivalScoreList.add(2);
+		profile.survivalScoreList.add(5);
+		profile.survivalScoreList.add(1);
+		System.out.println(profile.survivalScoreList);
+		survivalScore = profile.calcSurvival(profile.survivalScoreList);
+		System.out.println("survival score: " + survivalScore);
+		
         scanner.close();
         System.out.println("done");
 
@@ -138,6 +151,7 @@ class Profile
 	final public int survivalSkills;
 	final public int strength;
 	final public int swim;
+	List<Integer> survivalScoreList = new ArrayList<>(); //to store survival points through each scene
 	
 	//constructors
 	public Profile(String name, String traveler, int money, int survivalSkills, int strength, int swim)
@@ -160,6 +174,16 @@ class Profile
 						   "Survival Skills:  " + survivalSkills + "\n" + 
 						   "Strength:         " + strength + "\n" +
 						   "Swim:             " + swim + "\n");
+	}
+	
+	public int calcSurvival(List<Integer> survivalScoreList) 
+	{
+		int sum = 0;
+		
+        for (int i = 0; i < survivalScoreList.size(); i++)
+            sum += survivalScoreList.get(i);
+
+        return sum;
 	}
 	
 
