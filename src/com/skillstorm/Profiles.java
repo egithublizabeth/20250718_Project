@@ -10,18 +10,50 @@ public class Profiles {
 
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
-		
-		 //instantiate variables
+		//opern scanner for user input
+		Scanner scanner = new Scanner(System.in);
+
+		// get user name input
+		String nameString = userNameInput(scanner);
+        System.out.println("user name: " + nameString);
+        System.out.println("\n");
+        
+        // get user profile input
+        Profile profileInput = userProfileInput(scanner, nameString);
+        System.out.println(profileInput);
+        scanner.close();
+
+
+	    System.out.println();
+		profileInput.info();
+		System.out.println(profileInput.backStory);
+//		
+//		//access profile surivalList example - to make sure it works
+//		int survivalScore;
+//		System.out.println(profile.survivalScoreList);
+//		profile.survivalScoreList.add(2);
+//		profile.survivalScoreList.add(2);
+//		profile.survivalScoreList.add(5);
+//		profile.survivalScoreList.add(1);
+//		System.out.println(profile.survivalScoreList);
+//		survivalScore = profile.calcSurvival(profile.survivalScoreList);
+//		System.out.println("survival score: " + survivalScore);
+//		
+//        scanner.close();
+        System.out.println("done");
+
+	}
+	
+	//Method: get user name input from player Method
+	public static String userNameInput(Scanner scanner)
+	{
+	    //instantiate variables
 		String[] userNameArray = null;
         int i;
         ArrayList<String> nameArray = new ArrayList<>();
         String nameString = null;
         Boolean validName = true;
         String userInputName = null;
-
-		//using scanner to get user name
-		Scanner scanner = new Scanner(System.in);
 		
 		//get user name and process it, do this until a valid name is entered
 		do
@@ -40,52 +72,54 @@ public class Profiles {
 	    
 		//trim white spaces and lower case
 		userNameArray = userInputName.trim().toLowerCase().split(" ");
-    	
-		//for loop, if blank toss it, if not store name in an ArrayList
-        for (i=0; i<userNameArray.length; i++)
-        {
-        	if (userNameArray[i].isBlank()) //if the string is blank/white spaces
-        	{ continue; }//do not include it, iterate and move to next iteration
-        	else
-        	{
-        		//capitalize the first letter and add it to the ArrayList
-        		String nameFixed = userNameArray[i].substring(0,1).toUpperCase() + userNameArray[i].substring(1);
-        		nameArray.add(nameFixed);
-        	}
-        }
-        
-        //concatenate the name and assign it to nameString
-        for (i=0; i < nameArray.size(); i++)
-        {
-        	if (i==0)
-        		nameString = nameArray.get(i);
-        	else
-        		nameString = nameString + " " + nameArray.get(i);
-        }
-    
-        
-     
-        System.out.println("user name: " + nameString);
-        System.out.println("\n");
-        
-        //let user choose the profile
+   	
+		//for loop, if blank space in array, toss it, if not store name in an ArrayList
+       for (i=0; i<userNameArray.length; i++)
+       {
+       	if (userNameArray[i].isBlank()) //if the string is blank/white spaces
+       		{ continue; }//do not include it, iterate and move to next iteration
+       	else
+       	{
+       		//capitalize the first letter and add it to the ArrayList
+       		String nameFixed = userNameArray[i].substring(0,1).toUpperCase() + userNameArray[i].substring(1);
+       		nameArray.add(nameFixed);
+       	}
+       }
+       
+       //concatenate the name and assign it to nameString
+       for (i=0; i < nameArray.size(); i++)
+       {
+       	if (i==0)
+       		nameString = nameArray.get(i);
+       	else
+       		nameString = nameString + " " + nameArray.get(i);
+       }
+       
+       return nameString;
+		
+	}
+	
+	//Method: get profile input selection from user
+	public static Profile userProfileInput(Scanner scanner, String nameString)
+	{   //let user choose the profile
         //instantiate variables
         boolean notMet = true;
         int profileInput = 0;
         
-        
         //user must enter valid integers 1,2,3
         do 
         {
+
 	        System.out.println("Pick your profile: (select 1, 2, or 3)" + "\n" + 
 	        					"1. 1st Class Traveler " + "\n" + 
 	        					"2. 2nd Class Traveler " + "\n" + 
 	        					"3. 3rd Class Traveler " );
-	        
+
 	        //if the read line is an integer, else its invalid and input again
 	        if (scanner.hasNextInt()) 
 	        {
 	        	profileInput = scanner.nextInt(); 
+	        	System.out.println();
 	        	
 	        	if ((profileInput == 1) | (profileInput == 2) | (profileInput == 3))
 		        	notMet = false;
@@ -94,10 +128,11 @@ public class Profiles {
 	        {
 		        System.out.println("Invalid input, must enter the following: 1, 2, or 3. \n");
 		        scanner.next();
+
 	        }
+	        
         } while (notMet); //while true, keep doing this loop
         
-
         //use switch statement to create the profile the user picked
         //instantiate variable
         Profile profile = null;
@@ -106,43 +141,25 @@ public class Profiles {
         {
 	        case 1:
 	        	{
-	        		profile = new Profile(nameString, "1st Class", 3, 1, 1, 2);
+	        		profile = new Profile(1, nameString, 3, 1, 1, 2);
 	        		profile.setBackStory(profileInput);
 	        		break;
 	        	}
 	        case 2:
 	        	{
-	        		profile = new Profile(nameString, "2nd Class", 2, 3, 2, 3);
+	        		profile = new Profile(2, nameString, 2, 3, 2, 3);
 	        		profile.setBackStory(profileInput);
 	        		break;
 	        	}
 	        case 3: 
 	        	{
-	        		profile = new Profile(nameString, "3rd Class", 1, 2, 3, 1);
+	        		profile = new Profile(3, nameString, 1, 2, 3, 1);
 	        		profile.setBackStory(profileInput);
 
 	        	}
         }
-    
-    
-	    System.out.println("\n");
-		profile.info();
-		System.out.println(profile.backStory);
-		
-		//access profile surivalList example - to make sure it works
-		int survivalScore;
-		System.out.println(profile.survivalScoreList);
-		profile.survivalScoreList.add(2);
-		profile.survivalScoreList.add(2);
-		profile.survivalScoreList.add(5);
-		profile.survivalScoreList.add(1);
-		System.out.println(profile.survivalScoreList);
-		survivalScore = profile.calcSurvival(profile.survivalScoreList);
-		System.out.println("survival score: " + survivalScore);
-		
-        scanner.close();
-        System.out.println("done");
-
+        
+        return profile;
 	}
 
 }
@@ -150,8 +167,8 @@ public class Profiles {
 class Profile
 {
 	//properties
+	final public int ticketClass;
 	final public String name;
-	final public String traveler;
 	final public int money;
 	final public int survivalSkills;
 	final public int strength;
@@ -160,10 +177,10 @@ class Profile
 	public String backStory;
 	
 	//constructors
-	public Profile(String name, String traveler, int money, int survivalSkills, int strength, int swim)
+	public Profile(int ticketClass, String name, int money, int survivalSkills, int strength, int swim)
 	{
+		this.ticketClass = ticketClass;
 		this.name = name;
-		this.traveler = traveler;
 		this.money = money;
 		this.survivalSkills = survivalSkills;
 		this.strength = strength;
@@ -174,8 +191,8 @@ class Profile
 	public void info()
 	{
 		System.out.println("Profile Character (1-low, 2-mid, 3-high)" + "\n" +
+						   "Ticket Class:     " + ticketClass + "\n" +
 						   "Name:             " + name + "\n" + 
-						   "Traveler:         " + traveler + "\n" + 
 						   "Money:            " + money + "\n" +
 						   "Survival Skills:  " + survivalSkills + "\n" + 
 						   "Strength:         " + strength + "\n" +
@@ -204,7 +221,7 @@ class Profile
         }
 	}
 	
-	//calc survial score
+	//calculate survival score
 	public int calcSurvival(List<Integer> survivalScoreList) 
 	{
 		int sum = 0;
