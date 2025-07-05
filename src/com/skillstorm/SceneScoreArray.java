@@ -36,8 +36,8 @@ public class SceneScoreArray {
 		System.out.println(sceneArray[3].getSceneNumber() + "\n");		
 		System.out.println(sceneArray[3].getSceneLocation() + "\n");		
 		System.out.println(sceneArray[3].getSceneDescription() + "\n");		
-		System.out.println(sceneArray[3].getInputFeedback1() + "\n");
-		System.out.println(sceneArray[3].getInputFeedback2() + "\n");
+		System.out.println(sceneArray[3].getInputFeedback(1) + "\n");
+		System.out.println(sceneArray[3].getInputFeedback(2) + "\n");
 
 
 		//test the scen0 getScore method with score1Arraay
@@ -60,10 +60,7 @@ public class SceneScoreArray {
 
 		System.out.println("surival score accumulated points: " + survivalScoreList);
 		
-        System.out.println("done");
-        
-
-		
+        System.out.println("done");	
 
 	}
 	
@@ -99,7 +96,7 @@ public class SceneScoreArray {
 		int[][][] scoreArray = { score0Array, score1Array, score2Array, score3Array,
 								score4Array, score5Array, score6Array, score7Array};
 		
-		System.out.println("create score array method is done");
+		//System.out.println("create score array method is done");
 		
 		return scoreArray;
 	}
@@ -117,13 +114,13 @@ public class SceneScoreArray {
 				"You have choosen to visit the Deck during the day.", "You have choosen to visit the Smoke Room.", score0Array);
 		
 		Scene scene1 = new Scene(1, "Location: Deck During the Day", 
-				"You see a 3rd class passenger drop a wallet, what do you do?\n"
+				"As you are people watching on the deck, you see a 3rd class passenger drop a wallet, what do you do?\n"
 				+ "1. Steal it\n"
 				+ "2. Return it", 
 				"You got caught and item was returned to the owner.", "The owner thanks you.", score1Array);
 		
 		Scene scene2 = new Scene(2, "Location: Smoke Room", 
-				"You see a 1st class passeneger leave an expensive pocket watch, what do you do?\n"
+				"In the smoke room, you see a 1st class passeneger leave an expensive pocket watch, what do you do?\n"
 				+ "1. Steal it\n"
 				+ "2. Return it", 
 				"You have succesfully stolen it but someone else noticed you and called you out.\n"
@@ -131,13 +128,13 @@ public class SceneScoreArray {
 				"The owner is grateful of the item and thanks you profusly.", score2Array);
 		
 		Scene scene3 = new Scene(3, "Location: The Grand Staircase", 
-				"You heard about the amazing staircase and you went to take a look. It is amazing!\n"
+				"You heard about the amazing grand staircase and you went to take a look. It is amazing!\n"
 				+ "You hear gossipers whisper about a woman from first class fratenizing with a 3rd class "
 				+ "gentlemen, what do you?\n"
 				+ "1. Tell them to shut their pie holes and mind their own business.\n"
 				+ "2. Say nothing.", 
 				"The gossipers turn red and are so embarassed they storm up the stair case.", 
-				"The gossipers so engrossed in their gossip almost misstep on the staircase and "
+				"The gossipers are so engrossed in their gossip almost misstep on the staircase and "
 				+ "everyone looks at them. "
 				+ "\nEmbarassed, they hide their faces and quickly exit the room.", score3Array);
 		
@@ -154,22 +151,23 @@ public class SceneScoreArray {
 				+ "1. Try to get on a lifeboat.\n"
 				+ "2. Raid the bar and drink as much water as is pouring in the boat.", 
 				"Unfortunately, all the boats are filled and you miss your chance.", 
-				"The only people at the bar are you and a couple of passengers who had the same idea.", 
+				"You party like it is the 1920s!", 
 				score5Array);
 		
 		Scene scene6 = new Scene(6, "Location: Atlantic Ocean", 
-				"The boat has sank and you are now in the frigid waters, what do you do?\n"
+				"The boat has sank and you are now in the frigid Atlantic waters, what do you do?\n"
 				+ "1. Swim to find debris to float on.\n"
 				+ "2. Float & take out the flask you have hidden in your garments and start drinking.", 
-				"You have found a piece of wood.", "You happen to come across a broken piece of wood\n"
-				+ " and am drifting.", score6Array);
+				"You have found a piece of wood.", "You happen to come across a drifting piece of wood."
+				, score6Array);
 		
 		Scene scene7 = new Scene(7, "Location: End Screen", 
 				"Let\'s see if you survived, enter \'1\' or \'2\' to calculate your doom.\n", 
 				"Survived!", "You have perished!", score7Array);
 
 		Scene[] sceneArray = {scene0, scene1, scene2, scene3, scene4, scene5, scene6, scene7 };
-		System.out.println("create scenes is done");
+		
+		//System.out.println("create scenes is done");
 		
 		return sceneArray;
 	}
@@ -243,9 +241,14 @@ class Scene
 
 	public String getSceneDescription() {return this.sceneDescription;}
 
-	public String getInputFeedback1() {return this.inputFeedback1;}
+	public String getInputFeedback(int choice) 
+	{
+		if (choice == 1)
+			return this.inputFeedback1;
+		else //choice == 2
+			return this.inputFeedback2;
+	}
 
-	public String getInputFeedback2() {return this.inputFeedback2;}
 	
 	public int[][] getScenePointArray() {return this.scenePointArray;}
 

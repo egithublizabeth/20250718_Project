@@ -1,52 +1,62 @@
 package com.skillstorm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 
 public class Profiles {
 
 	public static void main(String[] args)
 	{
-		//opern scanner for user input
+		//create scene scores an int array 8 2by3 by calling the create score array method
+		int[][][] scoreArray = SceneScoreArray.createScoreArrays();
+		
+		//create scenes for the game, stored in Scene Class Array
+		Scene[] sceneArray = SceneScoreArray.createScenes(scoreArray[0], scoreArray[1],scoreArray[2], 
+				scoreArray[3],scoreArray[4], scoreArray[5],scoreArray[6], scoreArray[7]);
+		System.out.println();
+		
+		//if play again, start it from here | option 1
+		//open scanner for user input
 		Scanner scanner = new Scanner(System.in);
+		
+		//Output for User Welcome
+		System.out.println("Welcome aboard the Titanic! \nLet's see if you can survive.");
 
 		// get user name input
 		String nameString = userNameInput(scanner);
         System.out.println("user name: " + nameString);
-        System.out.println("\n");
+        System.out.println();
         
         // get user profile input
+		//if play again, start it from here | option 2
         Profile profileInput = userProfileInput(scanner, nameString);
-        System.out.println(profileInput);
-        scanner.close();
-
-
-	    System.out.println();
 		profileInput.info();
 		System.out.println(profileInput.backStory);
-//		
-//		//access profile surivalList example - to make sure it works
-//		int survivalScore;
-//		System.out.println(profile.survivalScoreList);
-//		profile.survivalScoreList.add(2);
-//		profile.survivalScoreList.add(2);
-//		profile.survivalScoreList.add(5);
-//		profile.survivalScoreList.add(1);
-//		System.out.println(profile.survivalScoreList);
-//		survivalScore = profile.calcSurvival(profile.survivalScoreList);
-//		System.out.println("survival score: " + survivalScore);
-//		
-//        scanner.close();
+		System.out.println();
+		
+		//let the user play the game
+		PlayGame.playGame(scanner, sceneArray, profileInput);
+		
+		//print profile survival score array
+		System.out.println("Survial score accumulated points: " + profileInput.survivalScoreList);
+		
+		//calculate profile score array
+		int profileScore = profileInput.calcSurvival(profileInput.survivalScoreList) ;
+		System.out.println("Profile Score is: " + profileScore);
+		
+        scanner.close();
         System.out.println("done");
 
 	}
-	
+
+
 	//Method: get user name input from player Method
 	public static String userNameInput(Scanner scanner)
-	{
+	{ /* input: scanner class for user input
+		 output: user's name String
+		 objective: Get user's name
+	  */
 	    //instantiate variables
 		String[] userNameArray = null;
         int i;
@@ -56,9 +66,10 @@ public class Profiles {
         String userInputName = null;
 		
 		//get user name and process it, do this until a valid name is entered
-		do
+        System.out.println("What is your name? ");
+        
+        while(validName) //while true, do this
 		{
-	        System.out.println("What is your name? ");
 	        userInputName = scanner.nextLine();
 	        
 	        if (userInputName.isBlank()) //check if empty or blank
@@ -67,8 +78,7 @@ public class Profiles {
 	    		{System.out.println("Name must be less than 21 characters. \n");}
 	        else //it is a valid input
 	        	{validName = false;}
-	        
-		} while(validName);//while true, do this
+		} 
 	    
 		//trim white spaces and lower case
 		userNameArray = userInputName.trim().toLowerCase().split(" ");
@@ -101,37 +111,45 @@ public class Profiles {
 	
 	//Method: get profile input selection from user
 	public static Profile userProfileInput(Scanner scanner, String nameString)
-	{   //let user choose the profile
+	{ /* input: scanner class for user input and user's name
+		 output: users chosen Profile object
+		 objective: Get user's name Profile selection
+	  */
+		//let user choose the profile
         //instantiate variables
         boolean notMet = true;
         int profileInput = 0;
         
+        System.out.println("Pick your profile: (select 1, 2, or 3)" + "\n" + 
+				"1. 1st Class Traveler " + "\n" + 
+				"2. 2nd Class Traveler " + "\n" + 
+				"3. 3rd Class Traveler " );
+        
         //user must enter valid integers 1,2,3
-        do 
+        while (notMet) //while true, keep doing this loop
         {
-
-	        System.out.println("Pick your profile: (select 1, 2, or 3)" + "\n" + 
-	        					"1. 1st Class Traveler " + "\n" + 
-	        					"2. 2nd Class Traveler " + "\n" + 
-	        					"3. 3rd Class Traveler " );
-
 	        //if the read line is an integer, else its invalid and input again
 	        if (scanner.hasNextInt()) 
 	        {
 	        	profileInput = scanner.nextInt(); 
-	        	System.out.println();
 	        	
 	        	if ((profileInput == 1) | (profileInput == 2) | (profileInput == 3))
+	        	{
 		        	notMet = false;
+	        	}
+	        	else
+	        	{
+			        System.out.println("Invalid input, must enter the following: 1, 2, or 3. \n");
+	        		System.out.println();
+	        	}
+
 	        }
 	        else
 	        {
 		        System.out.println("Invalid input, must enter the following: 1, 2, or 3. \n");
 		        scanner.next();
-
 	        }
-	        
-        } while (notMet); //while true, keep doing this loop
+	    } 
         
         //use switch statement to create the profile the user picked
         //instantiate variable
@@ -155,7 +173,6 @@ public class Profiles {
 	        	{
 	        		profile = new Profile(3, nameString, 1, 2, 3, 1);
 	        		profile.setBackStory(profileInput);
-
 	        	}
         }
         
@@ -230,6 +247,8 @@ class Profile
             sum += survivalScoreList.get(i);
 
         return sum;
+        
+        //add boolean later if under 8, you did not survive
 	}
 	
 
