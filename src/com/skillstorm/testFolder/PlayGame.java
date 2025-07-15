@@ -1,13 +1,11 @@
 package com.skillstorm;
-
 import java.util.Scanner;
-
 
 public class PlayGame {
 
 	public static void main(String[] args) 
 	{
-		//create 'scene scores' an int array 8 2by3 by calling the create score array method
+		//create 'scene scores' an integer array 8 2by3 by calling the create score array method
 		int[][][] scoreArray = SceneScoreArray.createScoreArrays();
 		
 		//create scenes for the game, stored in Scene Class Array
@@ -22,7 +20,7 @@ public class PlayGame {
 		System.out.println("Welcome aboard the Titanic! \nLet's see if you can survive.");
 		System.out.println();
 		
-		// get user name input
+		//get user name input
 		String nameString = Profiles.userNameInput(scanner);
 		System.out.println();
 
@@ -66,8 +64,8 @@ public class PlayGame {
 
 	}
 	
-	//Method: Let the user play the game
-	//method 1 of 2
+	//Methods
+	//class PlayGame Method: 1 of 2
 	public static int inputChoice(Scanner scanner) 
 	{
 		/* input: scanner class for user to input choice
@@ -84,9 +82,7 @@ public class PlayGame {
 	        	choice = scanner.nextInt(); 
 	        	
 	        	if (choice == 1 || choice ==2)
-	        	{	
 	        		keepGoing = false;
-	        	}
 	        	else
 	        	{
 		        	System.out.println("Invalid integer input, you must enter the following: 1 or 2\n");
@@ -104,7 +100,7 @@ public class PlayGame {
 		return choice;
 	}
 
-	//method 2 of 2
+	//class PlayGame Method: 2 of 2
 	public static void playGame(Scanner scanner, Scene[] sceneArray, Profile profileInput)
 	{ /* input: scanner for user input, an array that holds Scene objects, a Profile object
 		 output: void
@@ -147,22 +143,19 @@ public class PlayGame {
 				sceneArray[i].addScore( sceneArray[i].getScore(choice, profileInput.ticketClass), profileInput.survivalScoreList);
 			}
 			
-			//Because we allow users to enter scene 1 or 2 from scene 0, we need to 
-			//add extra iteration logic for continuity
-			//if we are on iteration 1/scene 1, we need to jump to iteration 3/scene 3
+			/* Because we allow users to enter scene 1 or 2 from scene 0, we need to 
+			 * add extra iteration logic for continuity
+			 * if we are on iteration 1/scene 1, we need to jump to iteration 3/scene 3
+			 */
 			if (i==1)
-			{ 
 				i = 2; 
-			}
 			
 			//if we are on iteration 0/scene 0 and users choose scene 2, we need to jump
-			//to scene 2 aka iteration 2
+			//to scene 2 (iteration 2)
 			if ( (i == 0) && (choice == 2) )
-			{
 				i = 1;
-			}
-					
+			
 		} //end of for loop
 	}//end of method
 
-}
+}//end of Public class PlayGame
