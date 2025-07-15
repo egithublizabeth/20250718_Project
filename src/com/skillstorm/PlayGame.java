@@ -2,12 +2,11 @@ package com.skillstorm;
 
 import java.util.Scanner;
 
-
 public class PlayGame {
 
 	public static void main(String[] args) 
 	{
-		//create scene scores an int array 8 2by3 by calling the create score array method
+		//create 'scene scores' an integer array 8 2by3 by calling the create score array method
 		int[][][] scoreArray = SceneScoreArray.createScoreArrays();
 		
 		//create scenes for the game, stored in Scene Class Array
@@ -15,7 +14,6 @@ public class PlayGame {
 				scoreArray[3],scoreArray[4], scoreArray[5],scoreArray[6], scoreArray[7]);
 		System.out.println();
 		
-		//if play again, start it from here | option 1
 		//open scanner for user input
 		Scanner scanner = new Scanner(System.in);
 		
@@ -23,34 +21,81 @@ public class PlayGame {
 		System.out.println("Welcome aboard the Titanic! \nLet's see if you can survive.");
 		System.out.println();
 		
-		// get user name input
+		//get user name input
 		String nameString = Profiles.userNameInput(scanner);
-        System.out.println("user name: " + nameString);
-        System.out.println();
-        
-        // get user profile input
-		//if play again, start it from here | option 2
-        Profile profileInput = Profiles.userProfileInput(scanner, nameString);
-		profileInput.info();
-		System.out.println(profileInput.backStory);
 		System.out.println();
+
+		//allow user to play multiple times
+		boolean keepPlaying = true;
 		
-		//let the user play the game
-		playGame(scanner, sceneArray, profileInput);
+		do 
+		{
+	        // get user profile input
+	        Profile profileInput = Profiles.userProfileInput(scanner, nameString);
+	        System.out.println();
+			profileInput.info();
+			System.out.println(profileInput.backStory);
+			System.out.println();
+			
+			//let the user play the game
+			playGame(scanner, sceneArray, profileInput);
+			System.out.println();
+
+			//Would you like to play another round?
+			System.out.println("Would you like to play another round?(select 1 or 2)\n1.No\n2.Yes");
+			
+			int keepPlayingChoice = inputChoice(scanner);
+			
+			if (keepPlayingChoice == 1)
+				keepPlaying = false;
+			
+			System.out.println();
+
+		} while(keepPlaying);
 		
-		//print profile survival score array
-		System.out.println("Survial score accumulated points: " + profileInput.survivalScoreList);
-		
-		//calculate profile score array
-		int profileScore = profileInput.calcSurvival(profileInput.survivalScoreList) ;
-		System.out.println("Profile Score is: " + profileScore);
-		
+		//close the scanner
         scanner.close();
-        System.out.println("done");
+        System.out.println("*** End of the Game ***");
 
 	}
 	
-	//Method: Let the user play the game
+	//Methods
+	//class PlayGame Method: 1 of 2
+	public static int inputChoice(Scanner scanner) 
+	{
+		/* input: scanner class for user to input choice
+		 * output: returns an integer 1 or 2
+		 * objective: Get user input, can only input & return 1 or 2.
+		 */
+		boolean keepGoing = true;
+		int choice = 0;
+		
+		do 
+		{
+			if (scanner.hasNextInt())
+	        {
+	        	choice = scanner.nextInt(); 
+	        	
+	        	if (choice == 1 || choice ==2)
+	        		keepGoing = false;
+	        	else
+	        	{
+		        	System.out.println("Invalid integer input, you must enter the following: 1 or 2\n");
+	            	System.out.println();
+	        	}
+	        }
+	        else
+	        {
+	        	System.out.println("Invalid non-integer input, you must enter the following: 1 or 2\n");
+		        scanner.next();
+	        }
+		
+		} while(keepGoing);
+		
+		return choice;
+	}
+
+	//class PlayGame Method: 2 of 2
 	public static void playGame(Scanner scanner, Scene[] sceneArray, Profile profileInput)
 	{ /* input: scanner for user input, an array that holds Scene objects, a Profile object
 		 output: void
@@ -61,32 +106,14 @@ public class PlayGame {
 
 		for (int i = 0; i<sceneArray.length; i++)
 		{
+			//scene divider
+			if (i!=0) System.out.println("*******************************************");
+			
+			//print scene description to console
 			System.out.println(sceneArray[i].getSceneDescription());
 			
-			//user must enter valid integers 1 or 2
-			boolean notMet = true;
-	
-	        while(notMet)   //if true do this
-	        {
-	            if (scanner.hasNextInt())
-	            {
-	            	choice = scanner.nextInt(); 
-	            	
-	            	if (choice == 1| choice ==2)
-	            		notMet = false;
-	            	else
-	            	{
-	    	        	System.out.println("Invalid input, must enter the following: 1 or 2\n");
-	                	System.out.println();
-	            	}
-	            }
-	            else
-	            {
-		        	System.out.println("Invalid input, must enter the following: 1 or 2\n");
-			        scanner.next();
-	            }
-	        }
-			
+			//user must enter valid integers 1 or 2    
+	        choice = inputChoice(scanner);
 			System.out.println();
 			
 			//if we are on the last iteration
@@ -96,7 +123,7 @@ public class PlayGame {
 				int profileScore = profileInput.calcSurvival(profileInput.survivalScoreList);
 
 				//show survival feedback
-				if (profileScore >= 8)
+				if (profileScore >= 3)
 					System.out.println(sceneArray[i].getInputFeedback(1));
 				else
 					System.out.println(sceneArray[i].getInputFeedback(2));
@@ -111,22 +138,19 @@ public class PlayGame {
 				sceneArray[i].addScore( sceneArray[i].getScore(choice, profileInput.ticketClass), profileInput.survivalScoreList);
 			}
 			
-			//Because we allow users to enter scene 1 or 2 from scene 0, we need to 
-			//add extra iteration logic for continuity
-			//if we are on iteration 1/scene 1, we need to jump to iteration 3/scene 3
+			/* Because we allow users to enter scene 1 or 2 from scene 0, we need to 
+			 * add extra iteration logic for continuity
+			 * if we are on iteration 1/scene 1, we need to jump to iteration 3/scene 3
+			 */
 			if (i==1)
-			{ 
 				i = 2; 
-			}
 			
 			//if we are on iteration 0/scene 0 and users choose scene 2, we need to jump
-			//to scene 2 aka iteration 2
-			if ( (i == 0) & (choice == 2) )
-			{
+			//to scene 2 (iteration 2)
+			if ( (i == 0) && (choice == 2) )
 				i = 1;
-			}
-					
+			
 		} //end of for loop
 	}//end of method
 
-}
+}//end of Public class PlayGame
