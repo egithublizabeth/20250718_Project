@@ -198,7 +198,7 @@ class Scene
 	final String sceneDescription;
 	final String inputFeedback1;
 	final String inputFeedback2;
-	int[][] scenePointArray = new int[3][2];
+	int[][] scenePointArray = new int[2][3];
 
 	//constructor
 	public Scene (int sceneNumber, String sceneLocation, String sceneDescription, String inputFeedback1, 
