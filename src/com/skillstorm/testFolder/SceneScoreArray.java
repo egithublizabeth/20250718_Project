@@ -157,7 +157,7 @@ public class SceneScoreArray {
 				"It's now dinner time and the food is better than common food.\n"
 				+ "The talk around the dinner table is iceburgs. What is your opinion?\n"
 				+ "1. The boat will never sink. \n"
-				+ "2. The boad could sink, we need to be alert.", 
+				+ "2. The boat could sink, we need to be alert.", 
 				"Everyone agrees with you at the table because the boat is new.", 
 				"Everyone thinks you are too pessimistic and are overthinking.", score4Array);
 		
